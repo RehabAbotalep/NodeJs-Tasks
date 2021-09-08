@@ -27,6 +27,12 @@ writeDataToJsonFile = (data)=>{
 //add new task
 addTask = (data) => {
     let tasks = readDataFromJsonFile()
+
+    //validate that title is unique
+    index = tasks.findIndex(t=>data.title==t.title)
+
+    if(index !=-1) return console.log(chalk.red('this task is already exists '))
+    
     let task = {
         status: false,
         id : parseInt((Date.now()) * Math.random()),
@@ -35,6 +41,8 @@ addTask = (data) => {
     tasks.push(task)
     writeDataToJsonFile(tasks)
     console.log(chalk.green(`data inserted successfuly and you task id is ${task.id}`))
+
+    
 }
 
 //show all tasks
@@ -116,6 +124,23 @@ filterTasksByDate = () => {
     
 }
 
+searchTaskIndex = (tasks, searchVal) =>{
+    let result = tasks.findIndex(task=>{
+        return searchVal == task.id
+    })
+    return result
+}
+
+//delete
+deleteTask = (taskId)=>{
+    let tasks = readDataFromJsonFile()
+    let taskIndex = searchTaskIndex(tasks, taskId)
+    if(taskIndex==-1) return console.log(chalk.red('task not found'))
+    tasks.splice( taskIndex , 1 )
+    writeDataToJsonFile(tasks)
+    console.log(chalk.green('task deleted'))
+}
+
 module.exports = {
     addTask, 
     showAll,
@@ -124,5 +149,6 @@ module.exports = {
     deleteTaskByFilter,
     updataTask, 
     changeStaus,
-    filterTasksByDate
+    filterTasksByDate, 
+    
 }
