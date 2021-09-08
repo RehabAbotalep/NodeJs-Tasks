@@ -47,12 +47,11 @@ addStudent = (data) => {
 }
 
 getStudentId = (students) => {
-    id = 1
     let lastElement = students[students.length - 1]
     if(lastElement) 
-        id = lastElement.id+1
+        return lastElement.id+1
 
-    return id
+    return 1
 }
 
 //add subjects for student
