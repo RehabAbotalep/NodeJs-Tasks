@@ -67,9 +67,40 @@ addSubject = (studentId, data) => {
     writeDataToJsonFile(students)
 }
 
+getAllStudents = () => {
+    students = readDataFromJsonFile()
+    students.forEach(student => {
+        console.log(student)
+        
+    });
+}
+
+getStudent = (studentId) => {
+    students = readDataFromJsonFile()
+    result = students.find(student => student.id == studentId)
+    if(!result) 
+        return chalk.red('student not found')
+     
+    return result
+    
+}
+
+getStudentTotalDegree = (studentId)=>{
+    student = getStudent(studentId)
+    let totalDegree = 0
+    student.subjects.forEach(subject => {
+        totalDegree+=subject.degree
+        
+    });
+    return totalDegree 
+
+}
 
 
 module.exports = {
     addStudent,
-    addSubject
+    addSubject, 
+    getAllStudents,
+    getStudent,
+    getStudentTotalDegree
 }
