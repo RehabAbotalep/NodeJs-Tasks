@@ -65,6 +65,7 @@ addSubject = (studentId, data) => {
         {subject : data.subject,degree : data.degree}
     ]
     writeDataToJsonFile(students)
+    console.log(chalk.green(`subject inserted successfully`))
 }
 
 getAllStudents = () => {
