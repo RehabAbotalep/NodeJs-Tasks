@@ -1,0 +1,31 @@
+{{>header}}
+{{>navbar}}
+<section class="container my-3">
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>Balance</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+{{#each data}}
+            <tr>
+                <td>{{this.accNum}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.balance}}</td>
+                <td>
+                    <a href="withdraw/{{this.accNum}}" class="btn btn-primary m-1">withdraw</a>
+                    <a href="/addBalance/{{this.accNum}}" class="btn btn-warning m-1">Add balance</a>
+                    {{#if this.status}}
+                        <a href="" class="btn btn-success m-1">Activate</a>
+                    {{/if}}
+                </td>
+            </tr>
+{{/each}}
+        </tbody>
+    </table>
+</section>
+{{>footer}}
