@@ -31,8 +31,14 @@ const saveCustomer = (req, res) => {
     saveJsonFile(allUsers)
     res.redirect('/')
 }
+
 const getAll = (req, res) => {
     let allUsers = readJsonFile()
+    let search = req.query.q
+
+    if(search)
+        allUsers = allUsers.filter(user=> search == user.accNum)
+
     res.render('all', {
         pageTitle: "all Customers",
         data: allUsers
@@ -83,7 +89,18 @@ const addBalanceSubmit = (req, res) => {
     res.redirect('/')
 }
 
+const activate = (req, res) => {
+
+}
+
 
 module.exports = {
-    addCustomer, saveCustomer, getAll, withdrawForm, withdrawSubmit, addBalanceForm, addBalanceSubmit
+    addCustomer,
+    saveCustomer,
+    getAll,
+    withdrawForm, 
+    withdrawSubmit, 
+    addBalanceForm, 
+    addBalanceSubmit,
+    activate
 }

@@ -12,6 +12,8 @@ router.post('/withdraw/:accNum', customerController.withdrawSubmit)
 router.get('/addBalance/:accNum', customerController.addBalanceForm)
 router.post('/addBalance/:accNum', customerController.addBalanceSubmit)
 
+router.post('/activate/:accNum', customerController.activate)
+
 
 // router.get('*', customerController.err404)
 
