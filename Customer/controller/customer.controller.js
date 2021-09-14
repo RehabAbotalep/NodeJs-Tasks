@@ -24,12 +24,43 @@ const saveCustomer = (req, res) => {
     let user = {
         accNum: Date.now(),
         status:0,
-        balance:0,
-        name:req.body.name
+        balance:req.body.balance,
+        name:req.body.name,
     }
     allUsers.push(user)
     saveJsonFile(allUsers)
     res.redirect('/')
+}
+
+searchUser = (allUsers, id) => {
+    let index = allUsers.findIndex(user => {
+        return user.accNum == id
+    })
+    return index
+}
+
+const edit = (req, res) => {
+    let allUsers = readJsonFile()
+    let userIndex = searchUser(allUsers, req.params.accNum)
+    if(userIndex==-1) res.render('err404', {
+        pageTitle:"User Not Found",
+        err: `No user With id ${req.params.id}`
+    })
+    else{
+        res.render('edit',{
+            pageTitle:"Edit User",
+            user: allUsers[userIndex]
+        })    
+    }
+}
+
+const update = (req, res) => {
+    let allUsers = readJsonFile()
+    let userIndex = searchUser(allUsers, req.params.accNum)
+    allUsers[userIndex].name= req.body.name
+    saveJsonFile(allUsers)
+    res.redirect('/')
+    
 }
 
 const getAll = (req, res) => {
@@ -43,13 +74,6 @@ const getAll = (req, res) => {
         pageTitle: "all Customers",
         data: allUsers
     })
-}
-
-searchUser = (allUsers, id) => {
-    let index = allUsers.findIndex(user => {
-        return user.accNum == id
-    })
-    return index
 }
 
 const withdrawForm = (req, res) => {
@@ -90,13 +114,19 @@ const addBalanceSubmit = (req, res) => {
 }
 
 const activate = (req, res) => {
-
+    let allUsers = readJsonFile()
+    let userIndex = searchUser(allUsers, req.params.accNum)
+    allUsers[userIndex].status = 1
+    saveJsonFile(allUsers)
+    res.redirect('/')
 }
 
 
 module.exports = {
     addCustomer,
     saveCustomer,
+    edit,
+    update,
     getAll,
     withdrawForm, 
     withdrawSubmit, 
