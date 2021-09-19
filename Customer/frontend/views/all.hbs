@@ -17,8 +17,8 @@
                 <td>{{this.name}}</td>
                 <td>{{this.balance}}</td>
                 <td>
-                    <a href="withdraw/{{this.accNum}}" class="btn btn-primary m-1">withdraw</a>
-                    <a href="/addBalance/{{this.accNum}}" class="btn btn-warning m-1">Add balance</a>
+                    {{!-- <a href="withdraw/{{this.accNum}}" class="btn btn-primary m-1">withdraw</a> --}}
+                    <a href="/addBalance/{{this.accNum}}" class="btn btn-warning m-1">Manupliate balance</a>
                     <a href="/editCustomer/{{this.accNum}}" class="btn btn-success m-1">Edit</a>
                     {{#if this.status }}
                     <a href="/activate/{{this.accNum}}" class="btn btn-success m-1">Activate</a>

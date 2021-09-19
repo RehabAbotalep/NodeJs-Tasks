@@ -4,13 +4,20 @@
 <section class="container my-3">
     <form method="post">
         <div class="row">
-        <div class="mb-3 col-6">
-            <label class="label-control mb-2">Enter amount you want to add</label>
-            <input placeholder="amount" class="form-control" name="amount" type="number">
-        </div>
-        <div class="mb-3 col-12">
-            <button class="btn btn-primary">Add balance</button>
-        </div>
+            <div class="mb-3 col-6">
+                <label class="label-control mb-2">Enter amount you want to add</label>
+                <input placeholder="amount" class="form-control" name="amount" type="number">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="1" name="add">
+                <label class="form-check-label" for="flexCheckIndeterminate">
+                    Add
+                </label>
+            </div>
+            <br>
+            <div class="mb-3 col-12">
+                <button class="btn btn-primary">Balance</button>
+            </div>
 
         </div>
     </form>

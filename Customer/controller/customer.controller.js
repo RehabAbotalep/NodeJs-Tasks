@@ -1,4 +1,6 @@
 const fs = require('fs')
+const validator = require('validator')
+
 const readJsonFile = () => {
     let allUsers
     try {
@@ -21,15 +23,24 @@ const addCustomer = (req, res) => {
 const saveCustomer = (req, res) => {
     // res.send(req.body)
     let allUsers = readJsonFile()
-    let user = {
-        accNum: Date.now(),
-        status:0,
-        balance:req.body.balance,
-        name:req.body.name,
+    if(!(validator.isNumeric(req.body.balance))){
+        res.render('add', {
+            err : 'balance must be num'
+        })
+        console.log(111)
+    }else{
+        let user = {
+            accNum: Date.now(),
+            status:0,
+            balance:req.body.balance,
+            name:req.body.name,
+        }
+        allUsers.push(user)
+        saveJsonFile(allUsers)
+        res.redirect('/')
     }
-    allUsers.push(user)
-    saveJsonFile(allUsers)
-    res.redirect('/')
+    
+    
 }
 
 searchUser = (allUsers, id) => {
@@ -76,27 +87,25 @@ const getAll = (req, res) => {
     })
 }
 
-const withdrawForm = (req, res) => {
-    res.render('withdraw', {
-        pageTitle:'Withdraw'
-    })
-}
+// const withdrawForm = (req, res) => {
+//     res.render('withdraw', {
+//         pageTitle:'Withdraw'
+//     })
+// }
 
-const withdrawSubmit = (req, res) => {
+// const withdraw = (req, res) => {
 
-    allUsers = readJsonFile()
-    index = searchUser(allUsers, req.params.accNum)
-    if (allUsers[index].balance==0 || allUsers[index].balance < req.body.amount) res.render('err404', {
-        pageTitle: "Error",
-        err: `You can't withdraw this amount`
-    })
-    else{
-        allUsers[index].balance-=req.body.amount
-        saveJsonFile(allUsers)
-        res.redirect('/')
-    }
-    
-}
+//     allUsers = readJsonFile()
+//     index = searchUser(allUsers, req.params.accNum)
+//     if (allUsers[index].balance==0 || allUsers[index].balance < req.body.amount) res.render('err404', {
+//         pageTitle: "Error",
+//         err: `You can't withdraw this amount`
+//     })
+//     else{
+//         allUsers[index].balance-=amount
+//         saveJsonFile(allUsers)
+//     } 
+// }
 
 const addBalanceForm = (req, res) => {
     res.render('addBalance', {
@@ -104,14 +113,47 @@ const addBalanceForm = (req, res) => {
     })
 }
 
-const addBalanceSubmit = (req, res) => {
+// const addBalance = (userId, amount) => {
+
+//     allUsers = readJsonFile()
+//     index = searchUser(allUsers, userId)
+//     allUsers[index].balance+=parseInt(amount)
+//     saveJsonFile(allUsers)
+// }
+
+const withdraw = (balance, amount) => {
+    return balance-=amount
+}
+
+const addBalance = (balance, amount) => {
+    return balance+=parseInt(amount)
+}
+
+const manupliateBalance = (req, res) => {
+    userId = req.params.accNum
+    amount = req.body.amount
 
     allUsers = readJsonFile()
     index = searchUser(allUsers, req.params.accNum)
-    allUsers[index].balance+=parseInt(req.body.amount)
+    balance = allUsers[index].balance
+
+    if(req.body.add){
+
+        allUsers[index].balance =  addBalance(balance, amount)
+    }
+    else{
+        if (balance == 0 || balance < amount) res.render('err404', {
+            pageTitle: "Error",
+            err: `You can't withdraw this amount`
+        })
+        else{
+            allUsers[index].balance = withdraw(balance, amount)
+        } 
+    }
     saveJsonFile(allUsers)
     res.redirect('/')
 }
+
 
 const activate = (req, res) => {
     let allUsers = readJsonFile()
@@ -128,9 +170,9 @@ module.exports = {
     edit,
     update,
     getAll,
-    withdrawForm, 
-    withdrawSubmit, 
-    addBalanceForm, 
-    addBalanceSubmit,
+    // withdrawForm, 
+    // withdrawSubmit,
+    addBalanceForm,
+    manupliateBalance, 
     activate
 }

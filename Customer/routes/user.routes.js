@@ -10,11 +10,11 @@ router.post('/editCustomer/:accNum', customerController.update)
 
 router.get('', customerController.getAll)
 
-router.get('/withdraw/:accNum', customerController.withdrawForm)
-router.post('/withdraw/:accNum', customerController.withdrawSubmit)
+// router.get('/withdraw/:accNum', customerController.withdrawForm)
+// router.post('/withdraw/:accNum', customerController.withdrawSubmit)
 
 router.get('/addBalance/:accNum', customerController.addBalanceForm)
-router.post('/addBalance/:accNum', customerController.addBalanceSubmit)
+router.post('/addBalance/:accNum', customerController.manupliateBalance)
 
 router.get('/activate/:accNum', customerController.activate)
 
