@@ -48,7 +48,7 @@ const uploadFile = async(req, res) => {
         res.status(403).send( { status:false, data:"", message:"you have no access to add task"})
 
     const task = await Task.findById(req.params.id)
-    const resp = {emp: user._id, file:req.file.filename}
+    const resp = {emp: user._id, file:req.file.path.replace(/\\/g, '/')}
     task.responses.push(resp)
     await task.save()
 
