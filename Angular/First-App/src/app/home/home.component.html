@@ -1,0 +1,24 @@
+<h1>Directives</h1>
+<h4>ngFor</h4>
+<section class="row">
+    <!-- <div class="col-4" *ngFor="let image of images; let i=index ; let o=odd; let e=even">
+        <h4>{{i+1}}{{o}} - {{e}}</h4>
+        <h4>{{image.title}}</h4>
+        <img class="img-fluid" [src]="image.thumbnailUrl">
+    </div> -->
+    <input class="form-control" [(ngModel)]="searchKey" (input)="filter()">
+    <table class="table table-borderd">
+        <thead>
+            <th>#</th>
+            <th>title</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let p of result; let index = index; let o=odd; let e=even"
+                [ngClass]="{'oddRow':o, 'evenRow':e}"
+                >
+                <td>{{index}}</td>
+                <td>{{p.title}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
