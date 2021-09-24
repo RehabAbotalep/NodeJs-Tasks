@@ -1,0 +1,19 @@
+
+<section class="container">
+    <br>
+    <input class="form-control" [(ngModel)]="searchKey" (input)="search()">
+    <table class="table table-border">
+        <thead>
+            <th>#</th>
+            <th>Title</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of result; let i=index; let o=odd; let e=even;"
+            [ngClass]="{'oddRow':o, 'evenRow':e}"
+            >
+                <td>{{i+1}}</td>
+                <td>{{post.title}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
